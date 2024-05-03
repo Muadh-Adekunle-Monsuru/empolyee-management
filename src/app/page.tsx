@@ -45,7 +45,7 @@ export default function Home() {
 			}
 		};
 		getAccount();
-	}, []);
+	}, [router]);
 
 	const loginFunction = async (email: any, password: any) => {
 		const toast_id = toast.info('Logging you in', { autoClose: false });

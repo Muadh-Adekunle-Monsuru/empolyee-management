@@ -51,11 +51,11 @@ export default function Dashboard() {
 			);
 		};
 		getAccount();
-	}, []);
+	}, [router]);
 
 	const getData = async () => {
 		try {
-			await axios.get('http://localhost:8080/').then(
+			await axios.get('https://empolyee-management-backend.onrender.com/').then(
 				(response) => {
 					toast.dismiss();
 					setEmployees(response.data);
@@ -74,7 +74,7 @@ export default function Dashboard() {
 		e.preventDefault();
 		try {
 			const response = await axios
-				.post('http://localhost:8080/add', formData)
+				.post('https://empolyee-management-backend.onrender.com/add', formData)
 				.then((response) => {
 					setEmployees((val) => [...val, response.data]);
 					console.log(employees);
@@ -91,7 +91,9 @@ export default function Dashboard() {
 	};
 	const handleDelete = async (id) => {
 		const response = await axios
-			.post('http://localhost:8080/delete', { _id: id })
+			.post('https://empolyee-management-backend.onrender.com/delete', {
+				_id: id,
+			})
 			.then(() => {
 				getData();
 			})
@@ -111,7 +113,7 @@ export default function Dashboard() {
 		e.preventDefault();
 		try {
 			const response = await axios
-				.post('http://localhost:8080/update', data)
+				.post('https://empolyee-management-backend.onrender.com/update', data)
 				.then(() => {
 					getData();
 					setShowUpdate(false);

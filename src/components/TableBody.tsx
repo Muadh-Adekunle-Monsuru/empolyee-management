@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { TrashIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
 export default function TableBody({ data, handleDelete, handleUpdate }) {
 	const [employees, setEmployees] = useState([]);
 	return (
@@ -13,9 +14,11 @@ export default function TableBody({ data, handleDelete, handleUpdate }) {
 					>
 						<div className='flex gap-3 overflow-clip'>
 							<div className='w-7 border rounded-full hidden lg:block'>
-								<img
+								<Image
 									src={`https://api.dicebear.com/8.x/avataaars/png?seed=${data.name}`}
 									alt='avatar_image'
+									width={28}
+									height={28}
 								/>
 							</div>
 							<div>

@@ -4,29 +4,6 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 export default function UpdateEmployee({ toSubmit, formData, setFormData }) {
-	// const [formyData, setFormData] = useState({
-	// 	name: '',
-	// 	email: '',
-	// 	designation: 'Dentist',
-	// 	department: 'General Dentistry',
-	// 	accountStatus: 'Active',
-	// 	platformStatus: 'Accepted',
-	// });
-	// const handleSubmit = async (e) => {
-	// 	e.preventDefault();
-
-	// 	try {
-	// 		const response = await axios
-	// 			.post('http://localhost:8080/add', formData)
-	// 			.then((response) => {
-	// 				setShowCreate(false);
-	// 			});
-	// 		// console.log(response.data); // Log the response from the server
-	// 	} catch (error) {
-	// 		console.error('Error:', error);
-	// 	}
-	// };
-
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setFormData({

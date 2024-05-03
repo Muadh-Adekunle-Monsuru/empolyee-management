@@ -28,13 +28,15 @@ export default function Department() {
 			);
 		};
 		getAccount();
-	}, []);
+	}, [router]);
 
 	const getData = async () => {
 		try {
-			await axios.get('http://localhost:8080/departments').then((response) => {
-				setDepartement(response.data);
-			});
+			await axios
+				.get('https://empolyee-management-backend.onrender.com/departments')
+				.then((response) => {
+					setDepartement(response.data);
+				});
 		} catch (e) {
 			console.log('error calling axios', e);
 			toast.error('Cant connect to database ' + e, {
@@ -47,7 +49,9 @@ export default function Department() {
 		console.log(value);
 		try {
 			await axios
-				.post('http://localhost:8080/addept', { departmentName: value })
+				.post('https://empolyee-management-backend.onrender.com/addept', {
+					departmentName: value,
+				})
 				.then((response) => {
 					console.log(response);
 					getData();
@@ -62,7 +66,9 @@ export default function Department() {
 	};
 	const handleDelete = async (id) => {
 		const response = await axios
-			.post('http://localhost:8080/deletedept', { _id: id })
+			.post('https://empolyee-management-backend.onrender.com/deletedept', {
+				_id: id,
+			})
 			.then(() => {
 				getData();
 			})
@@ -101,8 +107,11 @@ export default function Department() {
 					</div>
 					<div>
 						{department.length > 0 &&
-							department.map((value) => (
-								<div className='flex justify-between items-center p-2 border-b w-full px-10 '>
+							department.map((value, index) => (
+								<div
+									key={index}
+									className='flex justify-between items-center p-2 border-b w-full px-10 '
+								>
 									<div>{value.departmentName}</div>
 									<div
 										className='cursor-pointer'
