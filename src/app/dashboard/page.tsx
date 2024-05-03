@@ -37,15 +37,15 @@ export default function Dashboard() {
 	const [showUpdate, setShowUpdate] = useState(false);
 	useEffect(() => {
 		const getAccount = async () => {
+			const toast_id = toast.loading('Loading', { autoClose: false });
 			await account.get().then(
 				(User) => {
-					// console.log('The current account', User);
+					toast.dismiss();
 					setUser(User);
 					getData();
 				},
 				(error) => {
 					console.log('error gettting account');
-					toast.error('Sign In');
 					router.replace('/');
 				}
 			);
@@ -55,13 +55,17 @@ export default function Dashboard() {
 
 	const getData = async () => {
 		try {
-			await axios
-				.get('http://localhost:8080/')
-				.then((response) => {
-					// console.log(response.data.length);
+			await axios.get('http://localhost:8080/').then(
+				(response) => {
+					toast.dismiss();
 					setEmployees(response.data);
-				})
-				.catch((e) => console.log('Error fetching data', e));
+				},
+				(e) => {
+					toast.error('Cant connect to database ' + e, {
+						autoClose: false,
+					});
+				}
+			);
 		} catch (e) {
 			console.log('error calling axios', e);
 		}
@@ -72,14 +76,17 @@ export default function Dashboard() {
 			const response = await axios
 				.post('http://localhost:8080/add', formData)
 				.then((response) => {
-					getData();
+					setEmployees((val) => [...val, response.data]);
+					console.log(employees);
 				})
 				.then(() => {
 					setShowCreate(false);
 				});
-			// console.log(response.data); // Log the response from the server
 		} catch (error) {
 			console.error('Error:', error);
+			toast.error('Failed to add new entry' + e, {
+				autoClose: false,
+			});
 		}
 	};
 	const handleDelete = async (id) => {
@@ -91,6 +98,9 @@ export default function Dashboard() {
 			.then(() => getData())
 			.catch((e) => {
 				console.log('error deleting data', e);
+				toast.error('Failed to delete record' + e, {
+					autoClose: false,
+				});
 			});
 	};
 	const handleUpdate = (data) => {
@@ -99,16 +109,21 @@ export default function Dashboard() {
 	};
 	const sendUpdate = async (e, data) => {
 		e.preventDefault();
-		console.log(data);
-		const response = await axios
-			.post('http://localhost:8080/update', data)
-			.then(() => {
-				getData();
-				setShowUpdate(false);
+		try {
+			const response = await axios
+				.post('http://localhost:8080/update', data)
+				.then(() => {
+					getData();
+					setShowUpdate(false);
+				});
+		} catch (e) {
+			toast.error('Failed to update record' + e, {
+				autoClose: false,
 			});
+		}
 	};
 	return (
-		<div className='h-screen w-full'>
+		<div className='min-h-screen w-full h-full '>
 			<header className='flex items-center p-1 justify-between md:px-10'>
 				<div className=''>
 					<h3 className='font-bold text-xl'>Employee Management</h3>
@@ -135,7 +150,7 @@ export default function Dashboard() {
 				</div>
 				<div className='flex justify-center flex-grow'>
 					<button
-						className='bg-orange-700 cursor-pointer shadow-md flex text-white text-xs py-3 px-3 rounded-lg'
+						className='bg-orange-700 cursor-pointer select-none shadow-md flex text-white text-xs py-3 px-3 rounded-lg'
 						onClick={() => setShowCreate((val) => !val)}
 					>
 						<UserPlusIcon className='h-4 w-4 text-white' />
@@ -185,7 +200,7 @@ export default function Dashboard() {
 				</motion.div>
 			</div>
 			<div></div>
-			<ToastContainer />
+			<ToastContainer limit={1} />
 		</div>
 	);
 }

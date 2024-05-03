@@ -12,21 +12,6 @@ export default function NewEmployee({ setShowCreate, toSubmit }) {
 		accountStatus: 'Active',
 		platformStatus: 'Accepted',
 	});
-	// const handleSubmit = async (e) => {
-	// 	e.preventDefault();
-
-	// 	try {
-	// 		const response = await axios
-	// 			.post('http://localhost:8080/add', formData)
-	// 			.then((response) => {
-	// 				setShowCreate(false);
-	// 			});
-	// 		// console.log(response.data); // Log the response from the server
-	// 	} catch (error) {
-	// 		console.error('Error:', error);
-	// 	}
-	// };
-
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setFormData({
@@ -37,8 +22,8 @@ export default function NewEmployee({ setShowCreate, toSubmit }) {
 	return (
 		<form>
 			<ToastContainer />
-			<div className='grid grid-cols-6 font-semibold w-full justify-between items-center text-xs text-gray-900 bg-gray-50 rounded-sm px-14 py-3 '>
-				<div className='flex gap-3'>
+			<div className='grid grid-cols-6 font-semibold w-full justify-between items-center md:text-xs text-gray-900 bg-gray-50 rounded-sm lg:px-14 px-1 py-3 text-[0.4rem] '>
+				<div className='flex gap-3 overflow-x-auto'>
 					<div>
 						<input
 							name='name'
@@ -58,7 +43,7 @@ export default function NewEmployee({ setShowCreate, toSubmit }) {
 						/>
 					</div>
 				</div>
-				<div>
+				<div className=' overflow-x-auto px-3'>
 					<select
 						name='designation'
 						id='designation'
@@ -71,7 +56,7 @@ export default function NewEmployee({ setShowCreate, toSubmit }) {
 						<option value='Surgeon'>Surgeon</option>
 					</select>
 				</div>
-				<div>
+				<div className='overflow-x-auto px-3 lg:px-0'>
 					<select
 						name='department'
 						id='department'
@@ -86,7 +71,7 @@ export default function NewEmployee({ setShowCreate, toSubmit }) {
 						<option value='Orthodonics'>Orthodonics</option>
 					</select>
 				</div>
-				<div>
+				<div className=' overflow-x-auto px-3'>
 					<select
 						name='accountStatus'
 						id='accountStatus'
@@ -98,7 +83,7 @@ export default function NewEmployee({ setShowCreate, toSubmit }) {
 						<option value='Inactive'>Inactive</option>
 					</select>
 				</div>
-				<div>
+				<div className=' overflow-x-auto px-3'>
 					<select
 						name='platformStatus'
 						id='platformStatus'
@@ -110,11 +95,13 @@ export default function NewEmployee({ setShowCreate, toSubmit }) {
 						<option value='Invited'>Invited</option>
 					</select>
 				</div>
-				<input
-					value='Submit'
-					className='py-2 border w-20 text-center rounded-md bg-orange-700 text-white ml-3'
-					onClick={(e) => toSubmit(e, formData)}
-				/>
+				<div className='overflow-x-auto'>
+					<input
+						value='Submit'
+						className='  py-2 border w-20 text-center rounded-md bg-orange-700 text-white ml-3'
+						onClick={(e) => toSubmit(e, formData)}
+					/>
+				</div>
 			</div>
 		</form>
 	);

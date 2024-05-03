@@ -2,9 +2,8 @@ import React from 'react';
 import { StopCircleIcon } from '@heroicons/react/24/outline';
 export default function TableHeader() {
 	return (
-		<div className='grid grid-cols-6 font-semibold w-full justify-between items-center text-xs text-gray-900 bg-slate-100 rounded-sm px-14 py-2 mt-2'>
+		<div className='grid grid-cols-6 font-semibold w-full justify-between items-center md:text-xs text-gray-900 bg-slate-100 rounded-sm lg:px-14 px-1 py-2 mt-2 text-[0.4rem] '>
 			<div className='flex gap-3'>
-				<div className='w-4 h-4 border-2 rounded-full'></div>
 				<div>Employee Name</div>
 			</div>
 			<div>Designation</div>

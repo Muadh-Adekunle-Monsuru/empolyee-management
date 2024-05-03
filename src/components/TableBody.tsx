@@ -9,10 +9,10 @@ export default function TableBody({ data, handleDelete, handleUpdate }) {
 				data.map((data, index) => (
 					<div
 						key={index}
-						className='grid grid-cols-6 w-full justify-between items-center text-xs text-gray-900 rounded-sm px-14 py-2 mt-1 border-b'
+						className='grid grid-cols-6 w-full justify-between items-center lg:text-xs text-gray-900 rounded-sm lg:px-14 px-1 py-2 mt-1 border-b text-[0.4rem]'
 					>
 						<div className='flex gap-3 overflow-clip'>
-							<div className='w-7 border rounded-full'>
+							<div className='w-7 border rounded-full hidden lg:block'>
 								<img
 									src={`https://api.dicebear.com/8.x/avataaars/png?seed=${data.name}`}
 									alt='avatar_image'
@@ -20,7 +20,9 @@ export default function TableBody({ data, handleDelete, handleUpdate }) {
 							</div>
 							<div>
 								<div>{data.name}</div>
-								<div className='text-[0.65rem] text-gray-500'>{data.email}</div>
+								<div className='lg:text-[0.65rem] text-[0.35rem] text-gray-500'>
+									{data.email}
+								</div>
 							</div>
 						</div>
 						<div>{data.designation}</div>

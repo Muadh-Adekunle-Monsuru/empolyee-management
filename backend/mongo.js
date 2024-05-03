@@ -19,9 +19,6 @@ const employeeSchema = new mongoose.Schema({
 	accountStatus: String,
 	platformStatus: String,
 });
-
-// const Reserve = mongoose.model('Seat', seatSchema);
-
 employeeSchema.set('toJSON', {
 	transform: (document, returnedObject) => {
 		returnedObject.id = returnedObject._id.toString();
@@ -29,4 +26,20 @@ employeeSchema.set('toJSON', {
 	},
 });
 
-module.exports = mongoose.model('Employee', employeeSchema);
+const departmentSchema = new mongoose.Schema({
+	departmentName: String,
+});
+departmentSchema.set('toJSON', {
+	transform: (document, returnedObject) => {
+		returnedObject.id = returnedObject._id.toString();
+		delete returnedObject.__v;
+	},
+});
+
+const Department = mongoose.model('Department', departmentSchema);
+const Employee = mongoose.model('Employee', employeeSchema);
+
+module.exports = {
+	Department,
+	Employee,
+};

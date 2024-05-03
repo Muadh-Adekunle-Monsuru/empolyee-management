@@ -18,38 +18,66 @@ export default function Home() {
 		setLogin((val) => !val);
 		setRegister((val) => !val);
 	};
-	// const [loggedInUser, setLoggedInUser] = useState(null);
-
 	const router = useRouter();
+	useEffect(() => {
+		const getAccount = async () => {
+			try {
+				const toast_id = toast.info(
+					'Getting Current User Session, Please Wait',
+					{ autoClose: false }
+				);
+				await account
+					.get()
+					.then((User) => {
+						router.replace('/dashboard');
+					})
+					.catch((e) => {
+						toast.update(toast_id, {
+							render: 'Please Log In Again!',
+							autoClose: 5000,
+							type: 'error',
+						});
+						// toast.error('No Current User, Log in to start a new session.');
+					});
+			} catch (e) {
+				// toast.dismiss();
+				console.log('Cant Get Current Session, Log In Instead');
+			}
+		};
+		getAccount();
+	}, []);
 
 	const loginFunction = async (email: any, password: any) => {
-		// console.log(email, password);
+		const toast_id = toast.info('Logging you in', { autoClose: false });
 		try {
 			const session = await account
 				.createEmailPasswordSession(email, password)
-				.then(
-					(session) => {
-						router.replace('/dashboard');
-					},
-					(error) => {
-						console.log('error loggin in', error);
-						toast.error('Error Logging In: ' + error);
-					}
-				);
+				.then((session) => {
+					router.replace('/dashboard');
+				});
 		} catch (e) {
 			console.log('error login in', e);
-			toast.error('Error Trying Log In' + e);
+			toast.update(toast_id, {
+				render: `${e}`,
+				autoClose: 5000,
+				type: 'error',
+			});
 		}
 	};
 
 	const registerFunction = async (name, email, password) => {
+		const toast_id = toast.info('Creating Account', { autoClose: false });
 		try {
 			await account.create(ID.unique(), email, password, name).then(() => {
 				loginFunction(email, password);
 			});
 		} catch (e) {
 			console.log('Error creating account', e);
-			toast.error('Error creating account: ' + e);
+			toast.update(toast_id, {
+				render: `${e}`,
+				autoClose: 5000,
+				type: 'error',
+			});
 		}
 	};
 
