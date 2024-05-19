@@ -33,7 +33,7 @@ export default function Department() {
 	const getData = async () => {
 		try {
 			await axios
-				.get('https://empolyee-management-backend.onrender.com/departments')
+				.get('https://employee-management-backend-three.vercel.app/departments')
 				.then((response) => {
 					setDepartement(response.data);
 				});
@@ -49,7 +49,7 @@ export default function Department() {
 		console.log(value);
 		try {
 			await axios
-				.post('https://empolyee-management-backend.onrender.com/addept', {
+				.post('https://employee-management-backend-three.vercel.app/addept', {
 					departmentName: value,
 				})
 				.then((response) => {
@@ -66,7 +66,7 @@ export default function Department() {
 	};
 	const handleDelete = async (id) => {
 		const response = await axios
-			.post('https://empolyee-management-backend.onrender.com/deletedept', {
+			.post('https://employee-management-backend-three.vercel.app/deletedept', {
 				_id: id,
 			})
 			.then(() => {

@@ -55,17 +55,19 @@ export default function Dashboard() {
 
 	const getData = async () => {
 		try {
-			await axios.get('https://empolyee-management-backend.onrender.com/').then(
-				(response) => {
-					toast.dismiss();
-					setEmployees(response.data);
-				},
-				(e) => {
-					toast.error('Cant connect to database ' + e, {
-						autoClose: false,
-					});
-				}
-			);
+			await axios
+				.get('https://employee-management-backend-three.vercel.app/')
+				.then(
+					(response) => {
+						toast.dismiss();
+						setEmployees(response.data);
+					},
+					(e) => {
+						toast.error('Cant connect to database ' + e, {
+							autoClose: false,
+						});
+					}
+				);
 		} catch (e) {
 			console.log('error calling axios', e);
 		}
@@ -74,7 +76,10 @@ export default function Dashboard() {
 		e.preventDefault();
 		try {
 			const response = await axios
-				.post('https://empolyee-management-backend.onrender.com/add', formData)
+				.post(
+					'https://employee-management-backend-three.vercel.app/add',
+					formData
+				)
 				.then((response) => {
 					setEmployees((val) => [...val, response.data]);
 					console.log(employees);
@@ -91,7 +96,7 @@ export default function Dashboard() {
 	};
 	const handleDelete = async (id) => {
 		const response = await axios
-			.post('https://empolyee-management-backend.onrender.com/delete', {
+			.post('https://employee-management-backend-three.vercel.app/delete', {
 				_id: id,
 			})
 			.then(() => {
@@ -113,7 +118,10 @@ export default function Dashboard() {
 		e.preventDefault();
 		try {
 			const response = await axios
-				.post('https://empolyee-management-backend.onrender.com/update', data)
+				.post(
+					'https://employee-management-backend-three.vercel.app/update',
+					data
+				)
 				.then(() => {
 					getData();
 					setShowUpdate(false);
